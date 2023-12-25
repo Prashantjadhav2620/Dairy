@@ -1,0 +1,13 @@
+/* HeroSection.css */
+
+
+  .slide-item {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .image-size {
+    width: 100%; /* Make the image fill its container */
+    height: 500px; /* Maintain the aspect ratio */
+  }
+  
