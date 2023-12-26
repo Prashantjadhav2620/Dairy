@@ -16,6 +16,8 @@ import MyState from "./context/data/myState";
 import Login from './pages/registration/Login.jsx';
 import Signup from './pages/registration/Signup.jsx';
 import ProductInfo from './pages/productInfo/ProductInfo.jsx';
+import AddProduct from './pages/admin/page/AddProduct.jsx';
+import UpdateProduct from './pages/admin/page/UpdateProduct.jsx';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/login" element={<Login/>}  />
           <Route path='/signup'element={<Signup/>} />
           <Route path="/productinfo/:id" element={<ProductInfo/>} />
+          <Route path='/addProduct'element={<AddProduct/>} />
+          <Route path='/updateProduct'element={<UpdateProduct/>} />
           <Route path="/*" element={<NoPage/>} />
         </Routes>
     </Router>

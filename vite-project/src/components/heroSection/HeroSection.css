@@ -1,13 +1,18 @@
 /* HeroSection.css */
 
+.slide-item {
+  display: flex;
+  justify-content: center;
+}
 
-  .slide-item {
-    display: flex;
-    justify-content: center;
-  }
-  
+.image-size {
+  width: 100%; /* Make the image fill its container */
+  height: 550px; /* Maintain the aspect ratio */
+}
+
+/* Responsive styling for mobile devices */
+@media screen and (max-width: 768px) {
   .image-size {
-    width: 100%; /* Make the image fill its container */
-    height: 500px; /* Maintain the aspect ratio */
+    height: 250px; /* Allow the height to adjust for mobile devices */
   }
-  
+}
