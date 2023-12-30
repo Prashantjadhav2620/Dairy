@@ -1,19 +1,12 @@
 // eslint-disable-next-line no-unused-vars
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
-import Slider from 'react-slick';
+//import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './HeroSection.css'; // Import the CSS file
 
 function HeroSection() {
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [
     'https://static.vecteezy.com/system/resources/previews/004/299/835/original/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-free-vector.jpg',
@@ -23,27 +16,25 @@ function HeroSection() {
     'https://th.bing.com/th/id/OIP.9WJX9SkpzpPPYN8_VbDjxgHaEK?rs=1&pid=ImgDetMain',
   ];
 
-  const [currentSlide, setCurrentSlide] = useState(0);
-
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Calculate the next slide index
-      const nextSlide = (currentSlide + 1) % images.length;
-      // Set the current slide index
-      setCurrentSlide(nextSlide);
-    }, 5000); // 5 seconds
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000);
 
-    return () => clearInterval(interval);
-  }, [currentSlide, images.length]);
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [currentImageIndex, images.length]);
 
   return (
-    <Slider {...sliderSettings} initialSlide={currentSlide}>
-      {images.map((image, index) => (
-        <div key={index} className="slide-item">
-          <img src={image} alt={`Slide ${index + 1}`} className="image-size" />
-        </div>
-      ))}
-    </Slider>
+    <div className="hero-section">
+      <img
+        src={images[currentImageIndex]}
+        alt={`Image ${currentImageIndex + 1}`}
+        className="image-size"
+      />
+    </div>
   );
 }
 

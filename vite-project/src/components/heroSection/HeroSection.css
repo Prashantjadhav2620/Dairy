@@ -13,6 +13,7 @@
 /* Responsive styling for mobile devices */
 @media screen and (max-width: 768px) {
   .image-size {
+    width: 100%;
     height: 250px; /* Allow the height to adjust for mobile devices */
   }
 }
