@@ -58,6 +58,8 @@
     <Compile Include="Services\Interface\IStateLocation.cs" />
     <Compile Include="Services\Interface\IStateServices.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

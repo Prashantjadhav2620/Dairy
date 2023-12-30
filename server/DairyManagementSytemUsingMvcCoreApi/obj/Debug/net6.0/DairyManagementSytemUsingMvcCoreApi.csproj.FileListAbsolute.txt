@@ -74,3 +74,5 @@ C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DairyManagementSytemUsingMv
 C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DairyManagementSytemUsingMvcCoreApi\obj\Debug\net6.0\DairyManagementSytemUsingMvcCoreApi.pdb
 C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DairyManagementSytemUsingMvcCoreApi\obj\Debug\net6.0\DairyManagementSytemUsingMvcCoreApi.genruntimeconfig.cache
 C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DairyManagementSytemUsingMvcCoreApi\obj\Debug\net6.0\ref\DairyManagementSytemUsingMvcCoreApi.dll
+C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DairyManagementSytemUsingMvcCoreApi\bin\Debug\net6.0\ADO.Net.Client.Annotations.dll
+C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DairyManagementSytemUsingMvcCoreApi\bin\Debug\net6.0\ADO.Net.Client.Core.dll

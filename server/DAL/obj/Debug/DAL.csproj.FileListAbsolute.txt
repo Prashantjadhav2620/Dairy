@@ -4,3 +4,9 @@ C:\Users\Zafar.shaikh02\source\repos\DairyManagementSytemUsingMvcCoreApi\DAL\bin
 C:\Users\Zafar.shaikh02\source\repos\DairyManagementSytemUsingMvcCoreApi\DAL\bin\Debug\DAL.pdb
 C:\Users\Zafar.shaikh02\source\repos\DairyManagementSytemUsingMvcCoreApi\DAL\obj\Debug\DAL.dll
 C:\Users\Zafar.shaikh02\source\repos\DairyManagementSytemUsingMvcCoreApi\DAL\obj\Debug\DAL.pdb
+C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DAL\bin\Debug\DAL.dll
+C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DAL\bin\Debug\DAL.pdb
+C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DAL\obj\Debug\DAL.csproj.AssemblyReference.cache
+C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DAL\obj\Debug\DAL.dll
+C:\Users\prass\OneDrive\Desktop\Akash\PROJECT\server\DAL\obj\Debug\DAL.pdb
