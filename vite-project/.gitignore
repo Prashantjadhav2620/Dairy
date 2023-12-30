@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+vite-project\node_modules
+.env
+vite-project\src\firebase
+vite-project/src/firebase/firebaseConfig.jsx

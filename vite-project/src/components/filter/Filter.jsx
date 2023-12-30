@@ -4,7 +4,7 @@ import myContext from '../../context/data/myContext'
 
 function Filter() {
     const context = useContext(myContext)
-    const { mode } = context
+    const { mode ,product ,setProducts } = context
 
     return (
         <div>
@@ -36,28 +36,24 @@ function Filter() {
                         </button>
                     </div>
                     <div>
-                        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-                                <select className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
-                                    <option value="milk">Milk</option>
-                                    <option value="cheese">Cheese</option>
-                                    <option value="panner">Panner</option>
-                                    <option value="butter">Butter</option>
-                                </select>
-                                <select className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                </select>
-                                <select className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
-                                    <option value="5">50 g</option>
-                                    <option value="10">100 g</option>
-                                    <option value="10">200 g</option>
-                                    <option value="15">250 g</option>
-                                    <option value="15">1 kg</option>
-                                    <option value="15">2 kg</option>
-                                    <option value="20">5 kg</option>
-                                </select>
+                    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
+                            <select
+                                className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
+                                <option value="">Select Product</option>
+                                {product.map((product) => (
+                                    <option key={product.product_Id} value={product.product_Name}>
+                                        {product.product_Name}
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                className="px-4 py-3 w-full rounded-md bg-gray-50 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '', }}>
+                                <option value="">Select Quantity</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
                         </div>
                     </div>
                 </div>
