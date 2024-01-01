@@ -20,6 +20,7 @@ import ProductInfo from './pages/productInfo/ProductInfo.jsx';
 import AddProduct from './pages/admin/page/AddProduct.jsx';
 import UpdateProduct from './pages/admin/page/UpdateProduct.jsx';
 import {ToastContainer} from 'react-toastify';
+import CheckoutForm from './pages/checkout/CheckoutForm.jsx';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <ProtectedRoutesForAdmin><AddProduct /></ProtectedRoutesForAdmin>} />
           <Route path="/updateproduct" element={
             <ProtectedRoutesForAdmin><UpdateProduct /></ProtectedRoutesForAdmin>} />
+          <Route path="/CheckoutForm" element={<CheckoutForm/>} />
           <Route path="/*" element={<NoPage/>} />
         </Routes>
         <ToastContainer/>

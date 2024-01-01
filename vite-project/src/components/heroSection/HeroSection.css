@@ -7,7 +7,7 @@
 
 .image-size {
   width: 100%; /* Make the image fill its container */
-  height: 550px; /* Maintain the aspect ratio */
+  height: 200px; /* Maintain the aspect ratio */
 }
 
 /* Responsive styling for mobile devices */

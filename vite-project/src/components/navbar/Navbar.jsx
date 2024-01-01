@@ -22,7 +22,7 @@ export default function Navbar() {
 
   const logout = () => {
     localStorage.clear('user');
-    navigate('/login')
+    navigate('/')
   }
 
   const cartItems = useSelector((state) => state.cart)
@@ -117,9 +117,9 @@ export default function Navbar() {
 
       {/* desktop  */}
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8" style={{ backgroundColor: mode === 'dark' ? 'rgb(62 64 66)' : '', color: mode === 'dark' ? 'white' : '', }}>
+        {/* <p className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8" style={{ backgroundColor: mode === 'dark' ? 'rgb(62 64 66)' : '', color: mode === 'dark' ? 'white' : '', }}>
           Get free delivery on orders over ₹500
-        </p>
+        </p> */}
 
         <nav aria-label="Top" className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl " style={{ backgroundColor: mode === 'dark' ? '#282c34' : '', color: mode === 'dark' ? 'white' : '', }}>
           <div className="">
@@ -160,9 +160,12 @@ export default function Navbar() {
                   </Link>:""
                   }
                   
+
                   {user?<a onClick={logout} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Logout
-                  </a>:""}
+                  </a>:<Link to={'/login'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    Login
+                  </Link>}
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">

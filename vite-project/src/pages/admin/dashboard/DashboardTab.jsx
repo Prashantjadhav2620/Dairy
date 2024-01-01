@@ -48,6 +48,13 @@ function DashboardTab() {
                                     </div>
                                 </button>
                             </Tab>
+                            <Tab>
+                                <button type="button" className="font-medium border-b-2 border-green-500 bg-[#605d5d12] text-green-500 rounded-lg text-xl  hover:shadow-green-700 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]   px-5 py-1.5 text-center ">
+                                    <div className="flex gap-2 items-center">
+                                        <FaUser /> Delivery Boy
+                                    </div>
+                                </button>
+                            </Tab>
                         </TabList>
                         {/* product  */}
                         <TabPanel>
@@ -153,6 +160,8 @@ function DashboardTab() {
                                 </div>
                             </div>
                         </TabPanel>
+
+                        {/* Order  */}
                         <TabPanel>
                             {/* <Order order={order} setOrder={setOrder} setLoading={setLoading} /> */}
                             <div className="relative overflow-x-auto mb-16">
@@ -240,10 +249,12 @@ function DashboardTab() {
                                  
                             </div>
                         </TabPanel>
+
+                         {/* User  */}
                         <TabPanel>
                             {/* <User addressInfo={addressInfo} setAddressInfo={setAddressInfo} setLoading={setLoading} /> */}
                             <div className="relative overflow-x-auto mb-10">
-                                <h1 className=' text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>User Details</h1>
+                                <h1 className=' text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>Customers Details</h1>
                                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead className="text-xs text-black uppercase bg-gray-200 " style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
                                         <tr>
@@ -291,6 +302,78 @@ function DashboardTab() {
                                                     </td>
                                                     <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                        kkk@gmail.com
+                                                    </td>
+                                                    <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                        12 Aug 2019
+                                                    </td>
+
+                                                </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </TabPanel>
+
+                         {/* Delivery Boy  */}
+                        <TabPanel>
+                            {/* <User addressInfo={addressInfo} setAddressInfo={setAddressInfo} setLoading={setLoading} /> */}
+                            <div className="relative overflow-x-auto mb-10">
+                                <h1 className=' text-center mb-5 text-3xl font-semibold underline' style={{ color: mode === 'dark' ? 'white' : '' }}>Delivery Boy Details</h1>
+                                <div className=" flex justify-end">
+                                   <Link to={'/addproduct'}>
+                                   <button
+                                        type="button"
+                                        className="focus:outline-none text-white bg-pink-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] border hover:bg-pink-700 outline-0 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} > <div className="flex gap-2 items-center">
+                                            Add Delivery Boy <FaUser  size={20} />
+                                        </div></button>
+                                        </Link>
+                                </div>
+                                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <thead className="text-xs text-black uppercase bg-gray-200 " style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
+                                        <tr>
+                                            <th scope="col" className="px-6 py-3">
+                                                S.No
+                                            </th>
+
+                                            <th scope="col" className="px-6 py-3">
+                                                Name
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Address
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Pincode
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Phone Number
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Email
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Date
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      
+                                                <tr className="bg-gray-50 border-b  dark:border-gray-700" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
+                                                    <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                        1.
+                                                    </td>
+                                                    <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                        TEST
+                                                    </td>
+                                                    <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                    TEST
+                                                    </td>
+                                                    <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                    TEST
+                                                    </td>
+                                                    <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                    TEST
+                                                    </td>
+                                                    <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                    TEST@gmail.com
                                                     </td>
                                                     <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                         12 Aug 2019

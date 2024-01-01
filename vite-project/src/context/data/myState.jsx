@@ -44,10 +44,13 @@ function MyState(props) {
         const response = await axios.post('https://localhost:2620/api/Products/createproducts', products);
         if(response.status === 200){
           console.log(response);
-          toast.success("Product added successfully");
+          toast.success("Product added successfully",{
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 100,
+          });
           setTimeout(() => {
             window.location.href='/dashboard';
-          }, 1000);
+          }, 100);
           getProductData();
           setLoading(false);
         }
@@ -77,7 +80,10 @@ function MyState(props) {
         toast.success("Products fetched successfully");
       } catch (error) {
         console.error("Error fetching products:", error);
-        toast.error("Failed to fetch products");
+        toast.error("Failed to fetch products",{
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 0,
+        });
       } finally {
         setLoading(false);
       }
@@ -107,7 +113,10 @@ function MyState(props) {
       
           if (response.status === 200) {
             console.log(response);
-            toast.success('Product updated successfully');
+            toast.success('Product updated successfully',{
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 10,
+            });
             setTimeout(() => {
               window.location.href='/dashboard';
             }, 1000);
@@ -167,7 +176,10 @@ function MyState(props) {
     
           if (response.status === 200) {
             console.log(response);
-            toast.success('Product deleted successfully');
+            toast.success('Product deleted successfully',{
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 100,
+            });
             getProductData();
             setLoading(false);
           } else {
@@ -191,14 +203,24 @@ function MyState(props) {
     //     deleteProduct(productId);
     //   }
     // };
-    
+  
+    const [search , SetSearch] =useState("");
 
+    const filterData = async(name)=>{
+      console.log("nameSearch",name);
+      SetSearch(name)
+    }
+    const [ProductTotalAmount,SetProducttotalAmount]=useState(0);
+
+    const ProductSubCost = async(amount)=>{
+      SetProducttotalAmount(amount)
+    }
 
   return (
     <MyContext.Provider value={{
       mode, toggleMode, loading, setLoading,
       products, setProducts, addProduct,product,
-      edithandle,updateProduct,deleteProduct
+      edithandle,updateProduct,deleteProduct,filterData,search,ProductTotalAmount,ProductSubCost
     }}>
       {props.children}
     </MyContext.Provider>

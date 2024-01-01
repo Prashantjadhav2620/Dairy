@@ -40,6 +40,7 @@ function Signup() {
            // toast.success("Sign up Successfully")
             toast.success("Registration Successful !", {
                 position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
               });
             setName("");
             setEmail("");
