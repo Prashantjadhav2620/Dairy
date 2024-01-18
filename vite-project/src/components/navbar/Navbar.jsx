@@ -25,6 +25,10 @@ export default function Navbar() {
     navigate('/')
   }
 
+  const Login = () => {
+    navigate('/login')
+  }
+
   const cartItems = useSelector((state) => state.cart)
 
   return (
@@ -87,7 +91,10 @@ export default function Navbar() {
                     <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Logout
                     </a>
-                  </div>:""}
+                  </div>:
+                  <a onClick={Login} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  Login
+                </a>}
                   <div className="flow-root">
                     <Link to={'/'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
                       <img

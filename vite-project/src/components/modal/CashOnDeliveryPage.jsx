@@ -1,91 +1,214 @@
-// CashOnDeliveryPage.js
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+
+import React, { useContext, useEffect } from 'react';
+import myContext from '../../context/data/myContext';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+// import jsPDF from 'jspdf';
+import jsPDF from 'jspdf';
+
+import 'jspdf-autotable'; 
+
 
 export default function CashOnDeliveryPage() {
-  let [isOpen, setIsOpen] = useState(false);
+  const context = useContext(myContext);
+  const { address, productsDetails , setproductsDetails, OrderInfo , setOrderInfo,orderIds,CreateOrder} = context;
 
-  function closeModal() {
-    setIsOpen(false);
+  useEffect(() => {
+    console.log("address", address);
+  }, [address]);
+
+  
+  const navigate = useNavigate();
+  // const [orderData, setOrderData] = useState(null);
+
+  const handleCancelOrder = () => {
+    const isConfirmed = window.confirm("Are you sure you want to cancel the order?");
+    
+    if (isConfirmed) {
+      // Reset order data or set it to null when the order is canceled
+      setproductsDetails([]);
+      toast.warning("Order is Cancel !!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 0,
+      });
+      // Navigate to the 'cart' page
+      navigate('/cart');
+    }
   }
-
-  function openModal() {
-    setIsOpen(true);
+  const handleAddProduct = () => {
+      navigate('/cart');
   }
+  
+  function generateNewOrderID(orderID = "AB-999") {
+    if (orderID == null || orderID === undefined) {
+        orderID = "AB-999";
+    }
 
-  return (
-    <>
-      <button
-        type="button"
-        className={`flex-1 text-white ${isOpen ? 'bg-green-600' : 'bg-gray-500'} hover:bg-violet-800 focus:outline-none rounded-lg p-2.5`}
-        onClick={openModal}
-      >
-        Cash on Delivery
-      </button>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 z-50 overflow-hidden"
-          onClose={closeModal}
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} // Added background color overlay
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+    const LETTERS = [
+        'A', 'B', 'C', 'D', 'E', 'F',
+        'G', 'H', 'I', 'J', 'K', 'L',
+        'M', 'N', 'O', 'P', 'Q', 'R',
+        'S', 'T', 'U', 'V', 'W', 'X',
+        'Y', 'Z'
+    ];
 
-          <div className="flex items-center justify-center h-screen">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel
-                className="fixed inset-0 z-50 overflow-hidden"
-                onClose={closeModal}
-                style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} // Added background color overlay
-              >
-                <div className="flex items-center justify-center h-screen">
-                  <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-auto mt-6">
-                    <h2 className="text-2xl font-bold mb-4">Cash on Delivery</h2>
-                    <p className="text-gray-600">
-                      Thank you for choosing Cash on Delivery. Your order is confirmed and will be processed shortly.
-                    </p>
-                  </div>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
-    </>
-  );
+    let parts = orderID.split('-');
+    let letters = parts[0];
+    let digits = parseInt(parts[1], 10); // Convert digits to integer
+    let newDigits = digits + 1;
+    let i = LETTERS.indexOf(letters[0]);
+    let j = LETTERS.indexOf(letters[1]) ;
+    // let j = LETTERS.indexOf(letters[1]) + 1;
+
+    if (newDigits > 9999) {
+        newDigits = 1000;
+        j++;
+        if (j >= 26) {
+            i++;
+            j = 0;
+            if (i >= 26) {
+                i = 0;
+            }
+        }
+        letters = `${LETTERS[i]}${LETTERS[j]}`;
+    }
+
+    const newOrderID = `${letters}-${newDigits}`;
+    return newOrderID;
+}
+
+const handleConfirmOrder = () => {
+  const orderId = generateNewOrderID(orderIds);
+  const currentDateTime = new Date().toISOString(); 
+   const PayMethod="Cash On Delivery";
+  const userid = JSON.parse(localStorage.getItem('user')).user.uid;
+  const useremail= JSON.parse(localStorage.getItem('user')).user.emailId;
+  const orderInfoData = {
+    Order_Id: orderId,
+    User_Id: userid,
+    Email_Id: useremail,
+    Date: currentDateTime,
+    AddressInfo: address,
+    OrderDetailsInfo: productsDetails,
+    PaymentMethod: PayMethod,
+  };
+
+  setOrderInfo(orderInfoData);
+  CreateOrder()
+  // navigate(`/Report`);
 }
 
 
 
-// import React from 'react';
+  return (
+    <div className=' bg-blue-900'>
+       <div className='flex items-center justify-center bg-blue-100'>
+          <h1 className="text-2xl font-bold mb-4 mt-3">Order confirm!</h1>
+        </div>
+        <div className='flex flex-wrap bg-blue-900'>
+          {/* Address Details */}
+          <div className='w-full lg:w-1/2 p-4'>
+            <div className='bg-white p-6 rounded-lg shadow-md'>
+              <h3 className='text-2xl font-bold mb-4'>Address Details</h3>
+              <div className='grid grid-cols-2 gap-4'>
+                <div>
+                  <p className='font-bold'>Name: {address.Name}</p>
+                </div><br></br>
+                <div>
+                  <p className='font-bold'>Address:{address.Address}</p>
+                </div><br></br>
+                <div>
+                  <p className='font-bold'>Pincode:{address.pincode}</p>
+                </div><br></br>
+                <div>
+                  <p className='font-bold'>Mobile Number:{address.MobileNo}</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-// const CashOnDeliveryPage = () => {
-//     return (
-//         <div className="mt-4">
-//             <h2 className="text-lg font-semibold mb-2">Cash on Delivery Process</h2>
-//             <p className="text-gray-700">
-//                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-//             </p>
-//         </div>
-//     );
-// };
+          {/* Product Details */}
+          <div className='w-full lg:w-1/2 p-4'>
+            <div className='bg-white p-6 rounded-lg shadow-md'>
+              <h3 className='text-2xl font-bold mb-4'>Product Details</h3>
+              <div className='overflow-x-auto'>
+                <table className='w-full'>
+                  <thead>
+                    <tr>
+                      <th className='text-left'>Product Name</th>
+                      <th className='text-left'>Quantity</th>
+                      <th className='text-left'>Unit Price</th>
+                      <th className='text-left'>Total Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {productsDetails.map((product, index) => {
+                      const productCost = product.quantity * product.product_Price; // Calculate product cost
+                      return (
+                        <tr key={index}>
+                          <td className='py-2'>{product.product_Name}</td>
+                          <td className='py-2'>{product.quantity}</td>
+                          <td className='py-2'>{product.product_Price}</td>
+                          <td className='py-2'>{productCost}</td>
+                        </tr>
+                      );
+                    })}
+                    {/* Separator Line */}
+                    <tr>
+                      <td colSpan="4" className='border-t font-bold'></td>
+                    </tr>
+                    {/* Total Cost Row */}
+                    <tr>
+                      <td colSpan="3" className='py-2 font-bold text-right'>Total Cost:</td>
+                      <td className='py-2 font-bold'>
+                        {productsDetails.reduce((total, product) => total + product.quantity * product.product_Price, 0)}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
 
-// export default CashOnDeliveryPage;
+
+        <div className='flex flex-wrap bg-blue-900'>
+          {/* Order Actions */}
+          <div className='w-full lg:w-1/2 p-4'>
+            <div className='bg-white p-6 rounded-lg shadow-md'>
+              <h3 className='text-2xl font-bold mb-4'>Order Actions</h3>
+              <div className='grid grid-cols-3 gap-4'>
+                <div>
+                  <button
+                    className='bg-blue-500 text-white px-4 py-2 rounded-md'
+                    onClick={() => handleAddProduct()}
+                  >
+                    Add Product
+                  </button>
+                </div>
+                <div>
+                  <button
+                    className='bg-red-500 text-white px-4 py-2 rounded-md'
+                    onClick={() => handleCancelOrder()}
+                  >
+                    Cancel Order
+                  </button>
+                </div>
+                <div>
+                  <button
+                    className='bg-green-500 text-white px-4 py-2 rounded-md'
+                    // onClick={() => handleConfirmOrder()}
+                    onClick={() => handleConfirmOrder()}
+                  >
+                    Confirm Order
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  );
+}

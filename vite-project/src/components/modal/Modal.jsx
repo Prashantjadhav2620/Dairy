@@ -95,19 +95,36 @@
 
 
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
+import myContext from '../../context/data/myContext';
 import CashOnDeliveryPage from './CashOnDeliveryPage'
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Modal() {
     let [isOpen, setIsOpen] = useState(false);
-    let [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+
+    const context = useContext(myContext)
+    const { mode ,address,setAddress ,productsDetails } = context;
+
+    let [selectedPaymentMethod, setSelectedPaymentMethod,] = useState(null);
 
     function closeModal() {
         setIsOpen(false);
     }
 
     function openModal() {
-        setIsOpen(true);
+        if(productsDetails.length>0){
+            setIsOpen(true);
+        }
+        else{
+            console.log("select the product")
+            toast.error("Plz select product first??", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 0,
+              });
+        }
     }
 
     function handlePaymentMethod(method) {
@@ -117,6 +134,19 @@ export default function Modal() {
     const  method=(method)=>{
         if (method === 'cod') {
             return <CashOnDeliveryPage/>
+        }
+    }
+    const navigate = useNavigate();
+    const CashOnDelivery =()=>{
+        console.log("address")
+        if(address.name!=null||address.Address!=null||address.MobileNo!=null||address.pincode!=null){
+            console.log("address",address)
+            navigate('/CashOnDelivery')
+        }else{
+            toast.error("Fill all fields ??", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 0,
+              });
         }
     }
     return (
@@ -163,23 +193,30 @@ export default function Modal() {
 
                                             <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0">
                                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-
                                                     <form className="space-y-4 md:space-y-6" action="#">
                                                         <div>
                                                             <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Enter Full Name</label>
-                                                            <input type="name" name="name" id="name" className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100" required />
+                                                            <input type="name" name="name" id="name" className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100" 
+                                                            onChange={(e) => setAddress({ ...address, Name: e.target.value })}
+                                                            required />
                                                         </div>
                                                         <div>
                                                             <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900">Enter Full Address</label>
-                                                            <input type="text" name="address" id="address" className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100" required />
+                                                            <input type="text" name="address" id="address" className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
+                                                            onChange={(e) => setAddress({ ...address, Address: e.target.value })}
+                                                             required />
                                                         </div>
                                                         <div>
                                                             <label htmlFor="pincode" className="block mb-2 text-sm font-medium text-gray-900">Enter Pincode</label>
-                                                            <input type="text" name="pincode" id="pincode" className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100" required />
+                                                            <input type="text" name="pincode" id="pincode" className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
+                                                            onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
+                                                             required />
                                                         </div>
                                                         <div>
                                                             <label htmlFor="mobileNumber" className="block mb-2 text-sm font-medium text-gray-900">Enter Mobile Number</label>
-                                                            <input type="text" name="mobileNumber" id="mobileNumber" className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100" required />
+                                                            <input type="text" name="mobileNumber" id="mobileNumber" className="border outline-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-100"
+                                                            onChange={(e) => setAddress({ ...address, MobileNo: e.target.value })}
+                                                             required />
                                                         </div>
 
                                                         <div>
@@ -192,14 +229,14 @@ export default function Modal() {
                                                                 >
                                                                     Online Payment
                                                                 </button>
-                                                                {/* <button
+                                                                <button
                                                                     type="button"
                                                                     className={`flex-1 text-white bg-violet-600 hover:bg-violet-800 focus:outline-none rounded-lg p-2.5 ${selectedPaymentMethod === 'cod' ? 'bg-green-600' : 'bg-gray-500'}`}
-                                                                    onClick={() => method('cod')}
+                                                                    onClick={() =>CashOnDelivery() }
                                                                 >
                                                                     Cash on Delivery
-                                                                </button> */}
-                                                                <CashOnDeliveryPage/>
+                                                                </button>
+                                                                {/* <CashOnDeliveryPage/> */}
                                                             </div>
                                                         </div>
                                                     </form>

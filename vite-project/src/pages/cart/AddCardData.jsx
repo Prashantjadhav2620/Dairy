@@ -469,7 +469,7 @@ import { toast } from 'react-toastify';
 
 const AddCardData = () => {
   const context = useContext(myContext);
-  const { mode, ProductSubCost } = context;
+  const { mode, ProductSubCost,productsDetails , setproductsDetails ,setShipping} = context;
 
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
@@ -478,6 +478,8 @@ const AddCardData = () => {
   const [selectedProducts, setSelectedProducts] = useState({});
   const [cartMap, setCartMap] = useState({}); // To store unique products in the cart
   const [totalAmount, setTotalAmount] = useState(0);
+
+  // const [productsDetails , setproductsDetails] = useState([]);
 
   useEffect(() => {
     const tempCartMap = {};
@@ -505,8 +507,8 @@ const AddCardData = () => {
 
   ProductSubCost(totalAmount);
 
-  const shipping = parseInt(100);
-  const grandTotal = shipping + totalAmount;
+   setShipping(0)
+  // const grandTotal = shipping + totalAmount;
 
   const deleteCart = (item) => {
     dispatch(deleteFromCart(item));
@@ -518,24 +520,72 @@ const AddCardData = () => {
       ...prevQuantityMap,
       [itemId]: newQuantity,
     }));
+    
   };
+
+  // const handleCheckboxChange = (itemId, isChecked) => {
+  //   setSelectedProducts((prevSelectedProducts) => ({
+  //     ...prevSelectedProducts,
+  //     [itemId]: isChecked,
+  //   }));
+
+  //   const selectedProductDetails = cartMap[itemId];
+
+  //   // Update the productsDetails state
+  //   setproductsDetails((prevProductsDetails) => {
+  //     if (isChecked) {
+
+  //       // If the product is selected, add it to the state
+  //       return [...prevProductsDetails, selectedProductDetails];
+  //     } else {
+  //       // If the product is deselected, remove it from the state
+  //       return prevProductsDetails.filter((product) => product.product_Id !== itemId);
+  //     }
+  //   });
+
+  // };
 
   const handleCheckboxChange = (itemId, isChecked) => {
     setSelectedProducts((prevSelectedProducts) => ({
       ...prevSelectedProducts,
       [itemId]: isChecked,
     }));
+  
+    const selectedProductDetails = cartMap[itemId];
+  
+    // Update the productsDetails state
+    setproductsDetails((prevProductsDetails) => {
+      if (isChecked) {
+        // If the product is selected, add it to the state
+        return [
+          ...prevProductsDetails,
+          { ...selectedProductDetails, quantity: quantityMap[itemId] || 1 },
+        ];
+      } else {
+        // If the product is deselected, remove it from the state
+        return prevProductsDetails.filter(
+          (product) => product.product_Id !== itemId
+        );
+      }
+    });
   };
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
+  
+  useEffect(()=>{
+     
+    console.log("productsDetails",productsDetails)
+  })
 
   return (
     <div className="rounded-lg md:w-2/3">
       {Object.values(cartMap).map((item, index) => {
+        console.log("item",item)
         const selectedQuantity = quantityMap[item.product_Id] || item.quantity; // Use item.quantity from the cart
         const isSelected = selectedProducts[item.product_Id] || false;
+      
         console.log("selectedQuantity",selectedQuantity)
         return (
           <div
@@ -565,6 +615,7 @@ const AddCardData = () => {
                         const newValue = e.target.value || e.value;
                         handleQuantityChange(item.product_Id, newValue);
                       }}
+                      
                       className="px-2 py-1 w-full rounded-md bg-yellow-400 border-transparent outline-0 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                       style={{ backgroundColor: mode === 'dark' ? 'rgb(64 66 70)' : '', color: mode === 'dark' ? 'white' : '' }}
                     >

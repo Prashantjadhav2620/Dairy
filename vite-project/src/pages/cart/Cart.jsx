@@ -13,14 +13,16 @@ import CartEmpty from './EmptyCart';
 function Cart() {
   const user = JSON.parse(localStorage.getItem('user'))
   const context = useContext(myContext)
-  const { mode ,ProductTotalAmount } = context;
+  const { mode ,ProductTotalAmount ,shipping,grandTotal,setGrandTotal} = context;
 
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart)
   // console.log(cartItems)
   
-  const shipping = parseInt(100);
-  const grandTotal = shipping + ProductTotalAmount
+  // const shipping = parseInt(100);
+  const Total = shipping + ProductTotalAmount
+  setGrandTotal(Total)
+
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
