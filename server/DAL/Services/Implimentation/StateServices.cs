@@ -11,7 +11,8 @@ namespace DAL.Services.Implimentation
 {
     public class StateServices:IStateServices
     {
-      readonly  SqlConnection con=new SqlConnection("Data Source=AKASH\\SQLEXPRESS;Initial Catalog=DairyFarm;Integrated Security=True");
+        readonly SqlConnection con = new SqlConnection("Data Source=PRASHANT\\SQLEXPRESS;Initial Catalog=DairyFarm;Integrated Security=True;TrustServerCertificate=True");
+        //readonly  SqlConnection con=new SqlConnection("Data Source=AKASH\\SQLEXPRESS;Initial Catalog=DairyFarm;Integrated Security=True");
 
         public async Task<string> CreateState(State s)
         {

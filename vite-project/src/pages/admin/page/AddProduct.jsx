@@ -26,7 +26,10 @@ function AddProduct() {
             const lastProductId = Math.max(...fetchedProductId.map(product => product.product_Id));
             setProducts({ ...products, product_Id: lastProductId+1 });
             console.log("Last Product ID:", lastProductId);
-            toast.success("Product ID fetched successfully");
+            toast.success("Product ID fetched successfully",{
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+              });
         } catch (error) {
             console.error("Error fetching product ID:", error);
             toast.error("Failed to fetch product ID");
@@ -54,19 +57,9 @@ function AddProduct() {
                             name='Id'
                             className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
                             placeholder='Product Id'
+                            readOnly
                         />
                     </div>
-                    {/* <div>
-                        <input
-                            type="text"
-                            value={products.product_Id}
-                            onChange={(e) => setProducts({ ...products, product_Id: e.target.value })}
-                            name='Id'
-                            className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
-                            placeholder='Product Id'
-                            readOnly // Make the input readOnly so the user cannot edit it
-                        />
-                    </div> */}
                     <div>
                         <input type="text"
                         value={products.product_Type}
