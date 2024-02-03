@@ -114,7 +114,8 @@ import BOBURL from './pages/BOBURL/BOBURL.jsx';
 import PdfViewer from  './pages/viewPdf/PdfViewer.jsx';
 import FormDataSender from './pages/admin/page/FormDataSender.jsx';
 import UpdateDeliveryAgent from './pages/admin/page/UpdateDeliveryAgent.jsx';
-import showOrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
+import OrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
+// import showOrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
 
 function App() {
   return (
@@ -150,7 +151,7 @@ function App() {
           <Route path="/PdfViewer" element={<PdfViewer/>} />
           <Route path="/FormDataSender" element={<FormDataSender/>} />
           <Route path="/UpdateDeliveryAgent" element={<UpdateDeliveryAgent/>} />
-          <Route path="/showOrderDetail" element={<showOrderDetails/>} />
+          <Route path="/OrderDetails" element={<OrderDetails/>} />
         </Routes>
         <ToastContainer/>
       </Router>

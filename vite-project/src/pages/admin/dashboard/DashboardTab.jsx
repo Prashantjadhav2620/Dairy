@@ -29,7 +29,7 @@ function DashboardTab() {
     function openModal() {
         setIsOpen(true)
     }
-    console.log("Agent ??",Agent)
+    
     const [imageUrl, setImageUrl] = useState([]);
 
 

@@ -1,0 +1,6 @@
+@DairyApp_HostAddress = http://localhost:5022
+
+GET {{DairyApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
