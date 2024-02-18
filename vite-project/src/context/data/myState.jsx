@@ -41,6 +41,7 @@ function MyState(props) {
     console.log("addProduct data", products);
 
     try {
+      // const response = await axios.post('https://localhost:2620/api/Products/createproducts', products);
       const response = await axios.post('https://localhost:2620/api/Products/createproducts', products);
       if (response.status === 200) {
         console.log(response);
@@ -75,7 +76,7 @@ function MyState(props) {
     setLoading(true);
     try {
       // const response = await axios.get('https://localhost:2620/api/Products/products');
-      const response = await axios.get('http://localhost:2620/api/Products/products');
+      const response = await axios.get('https://localhost:2620/api/Products/products');
       console.log("Product get data:>>", response.data);
       setProduct(response.data);
       toast.success("Products fetched successfully");
@@ -379,8 +380,7 @@ function MyState(props) {
   const getAgentData = async () => {
     try {
       // const response = await axios.get('https://localhost:2620/api/DeliveryAgent/alldeliveryagents');
-      // const response = await axios.get('https://localhost:2620/api/AgentData/getAllDeliveryAgents');
-      const response = await axios.get('http://localhost:2620/api/AgentData/getAllDeliveryAgents');
+      const response = await axios.get('https://localhost:2620/api/AgentData/getAllDeliveryAgents');
       console.log("Agent get data:>>", response.data);
       setAgent(response.data);
       toast.success("Agent Data fetched successfully");
@@ -516,7 +516,7 @@ function MyState(props) {
 
   const getorderIds = async()=>{
     // const response = await axios.get('https://localhost:2620/api/OrderInfo/getOrderIds')
-    const response = await axios.get('http://localhost:2620/api/OrderInfo/getOrderIds')
+    const response = await axios.get('https://localhost:2620/api/OrderInfo/getOrderIds')
     if(response){
       const index =response.data.length-1
       console.log("index",index)
@@ -534,7 +534,7 @@ function MyState(props) {
   const getorder = async()=>{
     setLoading(true)
     try{
-      const response = await axios.get(`http://localhost:2620/api/OrderInfo/getallorders`)
+      const response = await axios.get(`https://localhost:2620/api/OrderInfo/getallorders`)
       if (response.status === 200) {
         console.log("response getorder",response.data)
         setOrder(response.data);
