@@ -19,6 +19,7 @@ function MyState(props) {
 
     }
   }
+  
   const [loading, setLoading] = useState(false);
 
   //addProduct
@@ -40,6 +41,7 @@ function MyState(props) {
     console.log("addProduct data", products);
 
     try {
+      // const response = await axios.post('https://localhost:2620/api/Products/createproducts', products);
       const response = await axios.post('https://localhost:2620/api/Products/createproducts', products);
       if (response.status === 200) {
         console.log(response);
@@ -73,6 +75,7 @@ function MyState(props) {
   const getProductData = async () => {
     setLoading(true);
     try {
+      // const response = await axios.get('https://localhost:2620/api/Products/products');
       const response = await axios.get('https://localhost:2620/api/Products/products');
       console.log("Product get data:>>", response.data);
       setProduct(response.data);
@@ -512,6 +515,7 @@ function MyState(props) {
   const [orderIds, setorderIds]=useState()
 
   const getorderIds = async()=>{
+    // const response = await axios.get('https://localhost:2620/api/OrderInfo/getOrderIds')
     const response = await axios.get('https://localhost:2620/api/OrderInfo/getOrderIds')
     if(response){
       const index =response.data.length-1

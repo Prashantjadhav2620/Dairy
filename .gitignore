@@ -2,3 +2,6 @@
 .vs
 .vscode
 .vscode
+
+server\bin
+server\obj
