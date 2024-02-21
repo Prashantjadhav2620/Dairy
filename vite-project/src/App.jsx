@@ -116,6 +116,7 @@ import FormDataSender from './pages/admin/page/FormDataSender.jsx';
 import UpdateDeliveryAgent from './pages/admin/page/UpdateDeliveryAgent.jsx';
 import OrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
 // import showOrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
+import LoginDB from './pages/login/Login.jsx';
 
 function App() {
   return (
@@ -152,6 +153,7 @@ function App() {
           <Route path="/FormDataSender" element={<FormDataSender/>} />
           <Route path="/UpdateDeliveryAgent" element={<UpdateDeliveryAgent/>} />
           <Route path="/OrderDetails" element={<OrderDetails/>} />
+          <Route path="/LoginDB" element={<LoginDB/>} />
         </Routes>
         <ToastContainer/>
       </Router>
