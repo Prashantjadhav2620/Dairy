@@ -1,13 +1,5 @@
 ﻿//using DairyApp.Models;
 //using iText.Kernel.Geom;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.Extensions.Configuration;
-//using System;
-//using System.Data.SqlClient;
-//using System.Globalization;
-//using System.IO;
-//using System.util.zlib;
 
 using System;
 using System.Collections.Generic;
