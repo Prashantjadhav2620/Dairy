@@ -2,25 +2,6 @@
 
 namespace DairyApp.Models
 {
-    //public class OrderInfo
-    //{
-    //        public string Order_Id { get; set; }
-    //        public string User_Id { get; set; }
-    //        public string Email_Id { get; set; }
-    //        public DateTime Date { get; set; }
-
-    //        [Column(TypeName = "nvarchar(max)")]
-    //        public string AddressInfo { get; set; }
-
-    //        [Column(TypeName = "nvarchar(max)")]
-    //        public string OrderDetailsInfo { get; set; }
-
-    //        public string PaymentMethod { get; set; }
-
-
-    //}
-
-
     public class OrderInfo
     {
         public string Order_Id { get; set; }

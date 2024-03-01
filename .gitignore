@@ -5,3 +5,13 @@
 
 server\bin
 server\obj
+server/obj
+
+server\obj\Debug
+server\obj\Release
+
+server\obj\Debug\net5.0
+server\obj\Release\net5.0
+
+server\obj\Debug\net5.0\linux-x64
+server\obj\Release\net5.0\linux-x64
