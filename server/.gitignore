@@ -2,4 +2,12 @@
 server\.vs
 server\bin
 server\obj
-obj/
+server\Properties
+server\obj
+/server/obj
+server/obj
+
+server\obj\Debug
+server\obj\Debug\net6.0
+server\obj\Debug\net6.0\
+server\obj\Debug
