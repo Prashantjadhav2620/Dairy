@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import myContext from '../../context/data/myContext';
+import myContext from '../../../context/data/myContext';
 import { ToastContainer, toast } from 'react-toastify';
-import Loader from '../../components/loader/Loader';
-
-function SignupRg() {
+import Loader from '../../../components/loader/Loader';
+// import { useNavigate } from 'react-router-dom';
+function Signup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ function SignupRg() {
 
     const context = useContext(myContext);
     const { loading, setLoading } = context;
-
+    // const navigate = useNavigate();
     const validatePasswords = () => {
         // Password validation criteria
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
@@ -128,11 +128,11 @@ function SignupRg() {
                     <ToastContainer />
                 </div>
                 <div>
-                    <h2 className='text-white'>Have an account <Link className='text-red-500 font-bold' to={'/LoginDB'}>Login</Link></h2>
+                    <h2 className='text-white'>Have an account <Link className='text-red-500 font-bold' to={'/Login'}>Login</Link></h2>
                 </div>
             </div>
         </div>
     );
 }
 
-export default SignupRg;
+export default Signup;

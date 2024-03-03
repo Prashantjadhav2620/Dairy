@@ -13,17 +13,7 @@ import {  useSelector } from 'react-redux'
 
 
 function Home() {
-  //const dispatch = useDispatch();
-  const cartItem = useSelector((state)=> state.cart)
-
-  console.log("cartItem",cartItem);
-  // const addCart = () => {
-  //   dispatch(addToCart("Milk"));
-  // }
-
-  // const deleteCart = () => {
-  //   dispatch(deleteFromCart("Milk"));
-  // }
+  
   return (
     <Layout>
       {/* <HeroSection /> */}

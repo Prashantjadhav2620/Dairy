@@ -28,7 +28,7 @@ namespace DairyApp.Controllers
                 using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("Dairy")))
                 {
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO OrderInfo(Order_Id, User_Id, Email_Id, Date, AddressInfo, OrderDetailsInfo, PaymentMethod) VALUES (@Order_Id, @User_Id, @Email_Id, @Date, @AddressInfo, @OrderDetailsInfo, @PaymentMethod)", con))
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO OrderInfo(Order_Id, User_Id, Email_Id, Date, AddressInfo, OrderDetailsInfo, PaymentMethod) VALUES (@Order_Id, @User_Id, @Email_Id, @Date, @AddressInfo, @OrderDetailsInfo, @PaymentMethod )", con))
                     {
                         // Convert the JSON date to a System.DateTime object
                         DateTime date = JsonSerializer.Deserialize<DateTime>(orderInfo.Date);
@@ -93,7 +93,8 @@ namespace DairyApp.Controllers
                                     // Deserialize the JSON strings back to objects
                                     AddressInfo = JsonSerializer.Deserialize<AddressInfo>(reader["AddressInfo"].ToString()),
                                     OrderDetailsInfo = JsonSerializer.Deserialize<List<OrderDetailInfo>>(reader["OrderDetailsInfo"].ToString()),
-                                    PaymentMethod = reader["PaymentMethod"].ToString()
+                                    PaymentMethod = reader["PaymentMethod"].ToString(),
+                                    IsActive = reader["IsActive"] != DBNull.Value ? (bool)reader["IsActive"] : false
                                 };
 
                                 allOrders.Add(order);

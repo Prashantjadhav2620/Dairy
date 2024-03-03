@@ -17,5 +17,7 @@ namespace DairyApp.Models
         [Required(ErrorMessage = "MobileNumber is required")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "MobileNumber must be 10 digits")]
         public string MobileNumber { get; set; }
+
+
     }
 }

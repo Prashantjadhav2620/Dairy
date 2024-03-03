@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const FormDataSender = () => {
   const [formData, setFormData] = useState({
     Photo: null,
     Proof: null,
     DeliveryAgent: {
-      ID: '',
-      NAME: '',
-      ADDRESS: '',
-      MobileNo: '',
-      EmailId: '',
-      PASSWORD: '',
-      JoiningDate: '',
+      ID: "",
+      NAME: "",
+      ADDRESS: "",
+      MobileNo: "",
+      EmailId: "",
+      PASSWORD: "",
+      JoiningDate: "",
     },
   });
   const [errors, setErrors] = useState(null);
@@ -20,7 +20,7 @@ const FormDataSender = () => {
   const handleChange = (event) => {
     const { name, value, files } = event.target;
 
-    if (name === 'Photo' || name === 'Proof') {
+    if (name === "Photo" || name === "Proof") {
       // Convert file to base64 data URL
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -30,8 +30,8 @@ const FormDataSender = () => {
         });
       };
       reader.readAsDataURL(files[0]);
-    } else if (name.startsWith('DeliveryAgent.')) {
-      const field = name.split('.')[1];
+    } else if (name.startsWith("DeliveryAgent.")) {
+      const field = name.split(".")[1];
       setFormData({
         ...formData,
         DeliveryAgent: {
@@ -47,20 +47,17 @@ const FormDataSender = () => {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append('Photo', formData.Photo);
-      formDataToSend.append('Proof', formData.Proof);
+      formDataToSend.append("Photo", formData.Photo);
+      formDataToSend.append("Proof", formData.Proof);
 
       Object.entries(formData.DeliveryAgent).forEach(([key, value]) => {
         formDataToSend.append(`DeliveryAgent.${key}`, value);
       });
 
-    //   const response = await axios.post('https://localhost:2620/api/AgentData/createDeliveryAgent', formDataToSend, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   });
-      const response = await axios.post('https://localhost:2620/api/AgentData/createDeliveryAgent', formDataToSend);
-
+      const response = await axios.post(
+        "https://localhost:2620/api/AgentData/createDeliveryAgent",
+        formDataToSend
+      );
 
       console.log(response.data);
 
@@ -69,22 +66,26 @@ const FormDataSender = () => {
         Photo: null,
         Proof: null,
         DeliveryAgent: {
-          ID: '',
-          NAME: '',
-          ADDRESS: '',
-          MobileNo: '',
-          EmailId: '',
-          PASSWORD: '',
-          JoiningDate: '',
+          ID: "",
+          NAME: "",
+          ADDRESS: "",
+          MobileNo: "",
+          EmailId: "",
+          PASSWORD: "",
+          JoiningDate: "",
         },
       });
       setErrors(null);
     } catch (error) {
       // Handle validation errors
-      if (error.response && error.response.status === 400 && error.response.data.errors) {
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.errors
+      ) {
         setErrors(error.response.data.errors);
       } else {
-        console.error('Error sending data:', error);
+        console.error("Error sending data:", error);
       }
     }
   };

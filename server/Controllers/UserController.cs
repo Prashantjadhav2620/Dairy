@@ -11,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.ComponentModel.DataAnnotations;
 using DairyApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
+using Newtonsoft.Json;
 
 [ApiController]
 [Route("api/user")]
@@ -69,9 +71,39 @@ public class UserController : ControllerBase
 
         // Generate JWT token
         var token = GenerateToken(userLogin.EmailId);
-        return Ok(new { Token = token, EmailId = userLogin.EmailId });
+        var refreshToken = GenerateRefreshToken(userLogin.EmailId);
 
-        // return Ok(new { Token = token });
+        int expiresIn = 5 * 60; // 5 minutes in seconds
+        var authenticatedUser = new UserResponse
+        {
+            Uid = Guid.NewGuid().ToString(),
+            Email = userLogin.EmailId,
+            EmailVerified = true,
+            isAnonymous= false
+        };
+
+        // Generate dummy tokens
+        var tokenResponse = new TokenResponse
+        {
+            IdToken ="password",
+            RefreshToken = refreshToken,
+            AccessToken = token,
+            ExpiresIn = expiresIn
+        };
+
+        // Create the response
+        var userLoginResponse = new UserLoginResponse
+        {
+            User = authenticatedUser,
+            TokenResponse = tokenResponse,
+            OperationType = "signIn"
+        };
+
+        // Serialize the response to JSON
+        var jsonResponse = JsonConvert.SerializeObject(userLoginResponse);
+
+        // Return the JSON response
+        return Ok(jsonResponse);
     }
 
 
@@ -79,38 +111,117 @@ public class UserController : ControllerBase
     [HttpPost("resetpassword")]
     public IActionResult ResetPassword(ResetPasswordModel resetPassword)
     {
-        // Implement password reset logic (you should validate the user's identity and update the password)
-        // For simplicity, a hardcoded check is done here. In a real-world scenario, you should use a secure mechanism.
-        if (resetPassword.Username == "sampleuser" && resetPassword.EmailId == "sample@example.com")
-        {
-            // Update the password in the database (implement this)
-            // For simplicity, we're just returning a success message.
-            return Ok("Password reset successfully");
-        }
+        bool emailExists = CheckEmailExists(resetPassword.EmailId);
 
-        return BadRequest("Invalid username or email");
+        //This is used for caching purposes. It tells the client that the response has not been modified, so the client can continue to use the same cached version of the response.
+        if (!emailExists)
+            return NotFound("Email id does not exist");
+
+        SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy"));
+
+        try
+        {
+            connection.Open();
+
+            // Hash the new password before updating the database
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(resetPassword.Password);
+
+            // SQL UPDATE statement to update the password
+            string updateQuery = @"UPDATE [User]
+                               SET [Password] = @Password
+                               WHERE [EmailId] = @EmailId";
+
+            using (SqlCommand cmd = new SqlCommand(updateQuery, connection))
+            {
+                // Parameters to prevent SQL injection
+                cmd.Parameters.AddWithValue("@Password", hashedPassword);
+                cmd.Parameters.AddWithValue("@EmailId", resetPassword.EmailId);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    // Password updated successfully
+                    return Ok("Password reset successfully");
+                }
+                else
+                {
+                    // No rows affected means user not found by email, return BadRequest
+                    return BadRequest("Invalid username or email");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            return StatusCode(500, "Internal Server Error");
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    private bool CheckEmailExists(string Email)
+    {
+        int userCount = 0;
+        using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
+        {
+            connection.Open();
+            try
+            {
+                // Assuming your SQL query to check if the user exists based on the username
+                string query = "SELECT COUNT(*) FROM [User] WHERE EmailId = @Email";
+
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Email", Email);
+
+                    // Execute the query and retrieve the count
+                    userCount = (int)cmd.ExecuteScalar();
+
+                    // Check if the count is greater than zero, indicating the user exists
+                    return userCount > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("failded", ex.Message);
+            }
+
+        }
+        return userCount > 0;
     }
 
     private bool CheckIfUserExists(string username)
     {
+        int userCount = 0;
         using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
         {
             connection.Open();
-
-            // Assuming your SQL query to check if the user exists based on the username
-            string query = "SELECT COUNT(*) FROM [User] WHERE Username = @Username";
-
-            using (SqlCommand cmd = new SqlCommand(query, connection))
+            try
             {
-                cmd.Parameters.AddWithValue("@Username", username);
+                // Assuming your SQL query to check if the user exists based on the username
+                string query = "SELECT COUNT(*) FROM [User] WHERE Username = @Username";
 
-                // Execute the query and retrieve the count
-                int userCount = (int)cmd.ExecuteScalar();
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Username", username);
 
-                // Check if the count is greater than zero, indicating the user exists
-                return userCount > 0;
+                    // Execute the query and retrieve the count
+                     userCount = (int)cmd.ExecuteScalar();
+
+                    // Check if the count is greater than zero, indicating the user exists
+                    return userCount > 0;
+                }
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine("failded",ex.Message);
+            }
+            
         }
+        return userCount > 0;
     }
     private bool ValidateUser(string EmailId, string password)
     {
@@ -188,12 +299,84 @@ public class UserController : ControllerBase
             issuer: issuer,
             audience: audience,
             claims: new[] { new Claim(ClaimTypes.Name, EmailId) },
-            expires: DateTime.Now.AddMinutes(30),
+            //expires: DateTime.Now.AddMinutes(30),
+            expires: DateTime.Now.AddMinutes(5),
             signingCredentials: creds
         );
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        // return new JwtSecurityTokenHandler().WriteToken(token);
+        var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+        //StoreTokenInDatabase(EmailId, jwtToken);
+
+        // Generate and return refresh token
+        //var refreshToken = GenerateRefreshToken(EmailId);
+        return jwtToken;
     }
+
+
+    //private void StoreTokenInDatabase(string email, string token)
+    //{
+    //    try
+    //    {
+    //        using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
+    //        {
+    //            connection.Open();
+
+    //            // Assuming your SQL query to update the access token based on the email
+    //            string query = "UPDATE [User] SET AccessToken = LEFT(@accessToken, 255) WHERE Username = @email";
+
+    //            using (SqlCommand cmd = new SqlCommand(query, connection))
+    //            {
+    //                cmd.Parameters.AddWithValue("@email", email);
+    //                cmd.Parameters.AddWithValue("@accessToken", token);
+
+    //                // Execute the update query
+    //                cmd.ExecuteNonQuery();
+    //            }
+    //            connection.Close();
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine("Failed ??",ex.Message);
+    //    }
+
+        
+    //}
+
+    private string GenerateRefreshToken(string email)
+    {
+        // Generate a unique refresh token (replace this with your actual logic)
+        var refreshToken = Guid.NewGuid().ToString();
+
+        // Store the refresh token in the database (replace this with your actual database logic)
+        // Example: Update [YourTableName] set [RefreshToken] = refreshToken where [EmailId] = email
+        // Make sure to handle database connections, commands, and exceptions properly
+        //StoreRefreshTokenInDatabase(email, refreshToken);
+
+        return refreshToken;
+    }
+
+    //private void StoreRefreshTokenInDatabase(string email, string refreshToken)
+    //{
+    //    using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
+    //    {
+    //        connection.Open();
+
+    //        // Assuming your SQL query to check if the user exists based on the username
+    //        string query = "UPDATE [User] SET RefreshToken = @refreshToken WHERE Username = @email";
+
+    //        using (SqlCommand cmd = new SqlCommand(query, connection))
+    //        {
+    //            cmd.Parameters.AddWithValue("@email", email);
+    //            cmd.Parameters.AddWithValue("@refreshToken", refreshToken);
+
+    //            // Execute the update query
+    //            cmd.ExecuteNonQuery();
+    //        }
+    //    }
+    //}
+
 
     [HttpPut("update")]
     public IActionResult UpdateUser(UpdateUserModel updateUser)
@@ -246,12 +429,11 @@ public class UserController : ControllerBase
                         // Map the data to GetUserModel objects
                         GetUserModel user = new GetUserModel
                         {
+                            Id = Convert.ToInt32(reader["Id"]),
                             Username = reader["Username"].ToString(),
                             EmailId = reader["EmailId"].ToString(),
                             MobileNumber = reader["MobileNumber"].ToString(),
-                            // You may need to convert the date format based on your requirements
                             Date = Convert.ToDateTime(reader["Date"]),
-                            // Password is not included to avoid exposing sensitive information
                         };
 
                         users.Add(user);

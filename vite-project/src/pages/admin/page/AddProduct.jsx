@@ -22,10 +22,8 @@ function AddProduct() {
         try {
             const response = await axios.get('https://localhost:2620/api/Products/products');
             const fetchedProductId = response.data;
-            console.log("fetchedProductId", fetchedProductId);
             const lastProductId = Math.max(...fetchedProductId.map(product => product.product_Id));
             setProducts({ ...products, product_Id: lastProductId+1 });
-            console.log("Last Product ID:", lastProductId);
             toast.success("Product ID fetched successfully",{
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 1000,

@@ -1,24 +1,29 @@
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import myContext from '../../context/data/myContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-// import jsPDF from 'jspdf';
-import jsPDF from 'jspdf';
-
 import 'jspdf-autotable'; 
 
 
 export default function CashOnDeliveryPage() {
   const context = useContext(myContext);
-  const { address, productsDetails , setproductsDetails, OrderInfo , setOrderInfo,orderIds,CreateOrder} = context;
+  const { address, productsDetails , setproductsDetails,orderIds,CreateOrder} = context;
 
   useEffect(() => {
-    console.log("address", address);
   }, [address]);
 
-  
+  const [OrderInfo, setOrderInfo] = useState({
+    Order_Id: null,
+    User_Id: null,
+    Email_Id: null,
+    Date: null,
+    AddressInfo: null,
+    OrderDetailsInfo: [null],
+    PaymentMethod: null,
+  });
+
   const navigate = useNavigate();
   // const [orderData, setOrderData] = useState(null);
 
@@ -82,9 +87,25 @@ const handleConfirmOrder = () => {
   const orderId = generateNewOrderID(orderIds);
   const currentDateTime = new Date().toISOString(); 
    const PayMethod="Cash On Delivery";
-  const userid = JSON.parse(localStorage.getItem('user')).user.uid;
-  const useremail= JSON.parse(localStorage.getItem('user')).user.emailId;
-  const orderInfoData = {
+   const UserId =JSON.parse(localStorage.getItem('user'));
+   const userid= UserId.data.User.Uid;
+   const EmailId =JSON.parse(localStorage.getItem('user'));
+   const useremail= EmailId.data.User.Email;
+  // const userid = JSON.parse(localStorage.getItem('user')).user.uid;
+  // const useremail= JSON.parse(localStorage.getItem('user')).user.emailId;
+  
+  // const setOrderInfo = {
+  //   Order_Id: orderId,
+  //   User_Id: userid,
+  //   Email_Id: useremail,
+  //   Date: currentDateTime,
+  //   AddressInfo: address,
+  //   OrderDetailsInfo: productsDetails,
+  //   PaymentMethod: PayMethod,
+  //   IsActive: true,
+  // };
+  // CreateOrder(OrderInfo)
+  setOrderInfo({
     Order_Id: orderId,
     User_Id: userid,
     Email_Id: useremail,
@@ -92,10 +113,12 @@ const handleConfirmOrder = () => {
     AddressInfo: address,
     OrderDetailsInfo: productsDetails,
     PaymentMethod: PayMethod,
-  };
+    IsActive: true,
+  });
 
-  setOrderInfo(orderInfoData);
-  CreateOrder()
+  console.log("setOrderInfo",setOrderInfo)
+  CreateOrder(OrderInfo);
+
   // navigate(`/Report`);
 }
 

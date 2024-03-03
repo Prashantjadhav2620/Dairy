@@ -18,8 +18,6 @@ export default function Navbar() {
 
   const user = JSON.parse(localStorage.getItem('user'))
 
-  console.log("Navuseru",user)
-
   const logout = () => {
     localStorage.clear('user');
     navigate('/')
@@ -81,11 +79,18 @@ export default function Navbar() {
                     </Link>
                   </div>:""}
                   
-                    {user?.user?.email === "admin123@gmail.com"?<div className="flow-root"> <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    {/* {user?.user?.email === "admin123@gmail.com"?<div className="flow-root"> <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
                       admin 
                     </Link>
-                    </div>:""} 
-                  
+                    </div>:""}  */}
+                  {user?.data?.User?.Email === "Admin123@gmail.com" ? (
+                    <div className="flow-root">
+                      <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                        admin
+                      </Link>
+                    </div>
+                  ) : null}
+
                   
                   {user ?<div className="flow-root">
                     <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
@@ -162,7 +167,7 @@ export default function Navbar() {
                     Order
                   </Link>:""}
                   {
-                    user?.user?.email === "admin123@gmail.com" ?<Link to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    user?.data?.User?.Email === "Admin123@gmail.com" ?<Link to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Admin
                   </Link>:""
                   }
