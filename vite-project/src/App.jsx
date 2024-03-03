@@ -14,18 +14,13 @@ import Cart from './pages/cart/Cart.jsx';
 import Dashboard from './pages/admin/dashboard/Dashboard.jsx';
 import NoPage from './pages/nopage/NoPage.jsx';
 import MyState from "./context/data/myState";
-import Login from './pages/registration/Login.jsx';
-import Signup from './pages/registration/Signup.jsx';
 import ProductInfo from './pages/productInfo/ProductInfo.jsx';
 import AddProduct from './pages/admin/page/AddProduct.jsx';
 import UpdateProduct from './pages/admin/page/UpdateProduct.jsx';
 import {ToastContainer} from 'react-toastify';
 import CheckoutForm from './pages/checkout/CheckoutForm.jsx';
 import AddDeliveryAgent from './pages/admin/page/AddDeliveryAgent.jsx';
-// import UpdateDeliveryAgent from './pages/admin/page/UpdateDeliveryAgent.jsx';
-// import DeliveryAgentManagement from './pages/admin/page/DeliveryAgentManagement.jsx';
 import CashOnDelivery from './components/modal/CashOnDelivery.jsx';
-// import CashOnDeliveryPage from './components/modal/CashOnDeliveryPage.jsx';
 import Report from './components/report/Report.jsx';
 import ImageComponent from './pages/fetchImg/ImageComponent.jsx';
 import CheckData from './pages/checkData/checkData.jsx';
@@ -34,9 +29,9 @@ import PdfViewer from  './pages/viewPdf/PdfViewer.jsx';
 import FormDataSender from './pages/admin/page/FormDataSender.jsx';
 import UpdateDeliveryAgent from './pages/admin/page/UpdateDeliveryAgent.jsx';
 import OrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
-// import showOrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
-import LoginDB from './pages/login/Login.jsx';
-import SignupRg from './pages/SignupRg/SignupRg.jsx'
+import Login from './pages/registration/login/Login.jsx';
+import Signup from './pages/registration/signup/Signup.jsx';
+import ForgotPassword from './pages/registration/forgotPassword/ForgotPassword.jsx';
 
 function App() {
   return (
@@ -54,8 +49,8 @@ function App() {
             <ProtectedRoutesForAdmin><Dashboard /></ProtectedRoutesForAdmin>
           } />
           <Route path="/productinfo/:id" element={<ProductInfo/>} />
-          <Route path="/login" element={<Login/>}  />
-          <Route path='/signup'element={<Signup/>} />
+          {/* <Route path="/login" element={<Login/>}  />
+          <Route path='/signup'element={<Signup/>} /> */}
           <Route path="/addproduct" element={
             <ProtectedRoutesForAdmin><AddProduct /></ProtectedRoutesForAdmin>} />
           <Route path="/updateproduct" element={
@@ -73,8 +68,9 @@ function App() {
           <Route path="/FormDataSender" element={<FormDataSender/>} />
           <Route path="/UpdateDeliveryAgent" element={<UpdateDeliveryAgent/>} />
           <Route path="/OrderDetails" element={<OrderDetails/>} />
-          <Route path="/LoginDB" element={<LoginDB/>} />
-          <Route path="/SignupRg" element={<SignupRg/>} />
+          <Route path="/Login" element={<Login/>} />
+          <Route path="/Signup" element={<Signup/>} />
+          <Route path="/ForgotPassword" element={<ForgotPassword/>} />
         </Routes>
         <ToastContainer/>
       </Router>
@@ -95,23 +91,39 @@ export const ProtectedRoutes = ({ children }) => {
     return children
   }
   else {
-    return <Navigate to='/login' />
+    return <Navigate to='/LoginDB' />
   }
 }
 
 //admin
 
 // eslint-disable-next-line react/prop-types
-export const ProtectedRoutesForAdmin = ({children}) => {
-  const admin = JSON.parse(localStorage.getItem('user'))
-  console.log(admin.user.email)
-  if (admin.user.email === "admin123@gmail.com" || admin.user.emailId === "admin123@.com") {
-    return children
+// admin
+
+// eslint-disable-next-line react/prop-types
+export const ProtectedRoutesForAdmin = ({ children }) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user.data.User.Email === "Admin123@gmail.com") {
+    return children;
+  } else {
+    // Redirect to LoginDB if not an admin
+    return <Navigate to='/LoginDB' />;
   }
-  else {
-    return <Navigate to='/login' />
-  }
-}
+};
+
+// // eslint-disable-next-line react/prop-types
+// export const ProtectedRoutesForAdmin = ({children}) => {
+  // const admin = JSON.parse(localStorage.getItem('user'))
+  // const Admin =JSON.parse(localStorage.getItem('user'));
+  // const checkAdmin =JSON.parse(Admin)
+//   console.log("checkAdmin",checkAdmin)
+//   if (admin.user.email === "admin123@gmail.com" || checkAdmin.data.User.Email === "Admin123@gmail.com") {
+//     return children
+//   }
+//   else {
+//     return <Navigate to='/LoginDB' />
+//   }
+// }
 
 
 // //dealer

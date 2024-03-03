@@ -12,11 +12,7 @@ function UpdateDeliveryAgent() {
     const cancelUpdate = () => {
         navigate('/dashboard');
     };
-
-    const handleImageUpload = () => {
-        console.log("handleImageUpload");
-    };
-
+    
     const handleInputChange = (field, value) => {
         setUpdateAgents({
             ...UpdateAgents,

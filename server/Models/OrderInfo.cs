@@ -11,6 +11,8 @@ namespace DairyApp.Models
         public AddressInfo AddressInfo { get; set; }
         public List<OrderDetailInfo> OrderDetailsInfo { get; set; }
         public string PaymentMethod { get; set; }
+
+        public bool IsActive { get; set; }
     }
 
     public class AddressInfo
