@@ -116,7 +116,7 @@ const handleConfirmOrder = () => {
     IsActive: true,
   });
 
-  console.log("setOrderInfo",setOrderInfo)
+  console.log("setOrderInfo",JSON.stringify(setOrderInfo));
   CreateOrder(OrderInfo);
 
   // navigate(`/Report`);
