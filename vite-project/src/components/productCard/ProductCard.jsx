@@ -35,7 +35,6 @@ function ProductCard() {
               d.product_Name.toLowerCase().includes(search.toLowerCase())
             )
             .map((item, index) => {
-              //   product.map((item, index) => {
               const {
                 product_Name,
                 product_Price,

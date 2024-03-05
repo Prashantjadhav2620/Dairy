@@ -45,9 +45,10 @@ public class UserController : ControllerBase
         using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
         {
             connection.Open();
-            using (SqlCommand cmd = new SqlCommand("INSERT INTO [User] (Username, EmailId, Password, MobileNumber, Date) VALUES (@Username, @EmailId, @Password, @MobileNumber, @Date)", connection))
+            using (SqlCommand cmd = new SqlCommand("INSERT INTO [User] (Username,User_Id, EmailId, Password, MobileNumber, Date) VALUES (@Username,@User_Id, @EmailId, @Password, @MobileNumber, @Date)", connection))
             {
                 cmd.Parameters.AddWithValue("@Username", user.Username);
+                cmd.Parameters.AddWithValue("@User_Id", Guid.NewGuid().ToString());
                 cmd.Parameters.AddWithValue("@EmailId", user.EmailId);
                 cmd.Parameters.AddWithValue("@Password", hashedPassword);
                 cmd.Parameters.AddWithValue("@MobileNumber", user.MobileNumber);
@@ -72,11 +73,12 @@ public class UserController : ControllerBase
         // Generate JWT token
         var token = GenerateToken(userLogin.EmailId);
         var refreshToken = GenerateRefreshToken(userLogin.EmailId);
+        var User_Id = UserId(userLogin.EmailId);
 
         int expiresIn = 5 * 60; // 5 minutes in seconds
         var authenticatedUser = new UserResponse
         {
-            Uid = Guid.NewGuid().ToString(),
+            Uid = User_Id,
             Email = userLogin.EmailId,
             EmailVerified = true,
             isAnonymous= false
@@ -106,6 +108,33 @@ public class UserController : ControllerBase
         return Ok(jsonResponse);
     }
 
+    private string UserId(string EmailId)
+    {
+        using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
+        {
+            connection.Open();
+
+            // Assuming your SQL query to get the hashed password based on the username
+            string query = "SELECT User_Id FROM [User] WHERE EmailId = @EmailId";
+
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@EmailId", EmailId);
+
+                // Execute the query
+                var result = cmd.ExecuteScalar();
+
+                // Check if the result is not null
+                if (result != null)
+                {
+                    // Convert the result to a string (assuming it's stored as a string in the database)
+                    return result.ToString();
+                }
+            }
+        }
+
+        return null;
+    }
 
 
     [HttpPost("resetpassword")]

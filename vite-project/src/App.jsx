@@ -32,6 +32,8 @@ import OrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
 import Login from './pages/registration/login/Login.jsx';
 import Signup from './pages/registration/signup/Signup.jsx';
 import ForgotPassword from './pages/registration/forgotPassword/ForgotPassword.jsx';
+import ContactUs from './pages/contact/ContactUs.jsx';
+import contactData from './pages/contact/contactData.jsx';
 
 function App() {
   return (
@@ -40,24 +42,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/order" element={
-            <ProtectedRoutes>
-              <Order />
-            </ProtectedRoutes>
-          } />
+            <ProtectedRoutes><Order /></ProtectedRoutes>} />
           <Route path="/cart" element={<Cart/>} />
-          <Route path="/dashboard" element={
-            <ProtectedRoutesForAdmin><Dashboard /></ProtectedRoutesForAdmin>
-          } />
+          <Route path="/dashboard" element={<ProtectedRoutesForAdmin><Dashboard /></ProtectedRoutesForAdmin> } />
           <Route path="/productinfo/:id" element={<ProductInfo/>} />
-          {/* <Route path="/login" element={<Login/>}  />
-          <Route path='/signup'element={<Signup/>} /> */}
-          <Route path="/addproduct" element={
-            <ProtectedRoutesForAdmin><AddProduct /></ProtectedRoutesForAdmin>} />
-          <Route path="/updateproduct" element={
-            <ProtectedRoutesForAdmin><UpdateProduct /></ProtectedRoutesForAdmin>} />
+          <Route path="/addproduct" element={ <ProtectedRoutesForAdmin><AddProduct /></ProtectedRoutesForAdmin>} />
+          <Route path="/updateproduct" element={<ProtectedRoutesForAdmin><UpdateProduct /></ProtectedRoutesForAdmin>} />
           <Route path="/CheckoutForm" element={<CheckoutForm/>} />
           <Route path="/AddDeliveryAgent" element={<ProtectedRoutesForAdmin><AddDeliveryAgent/></ProtectedRoutesForAdmin>} />
-          {/* <Route path="/UpdateDeliveryAgent" element={<ProtectedRoutesForAdmin><UpdateDeliveryAgent/></ProtectedRoutesForAdmin>} /> */}
           <Route path="/CashOnDelivery" element={<ProtectedRoutes><CashOnDelivery/></ProtectedRoutes>} />
           <Route path="/*" element={<NoPage/>} />
           <Route path="/report" element={<Report/>} />
@@ -71,6 +63,8 @@ function App() {
           <Route path="/Login" element={<Login/>} />
           <Route path="/Signup" element={<Signup/>} />
           <Route path="/ForgotPassword" element={<ForgotPassword/>} />
+          <Route path="/contact" element={<ContactUs/>} />
+          <Route path="/contactData" element={<contactData/>} />
         </Routes>
         <ToastContainer/>
       </Router>

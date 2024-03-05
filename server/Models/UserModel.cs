@@ -6,6 +6,9 @@ namespace DairyApp.Models
     {
         [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; }
+        
+        [Required(ErrorMessage = "User_Id is required")]
+        public string User_Id { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]
