@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="USERPHOTOS\" />
     <Folder Include="Proof\" />
     <Folder Include="PDF\" />
     <Folder Include="Photo\" />

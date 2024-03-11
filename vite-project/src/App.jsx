@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import Home from './pages/home/Home.jsx';
-import Order from './pages/order/Order.jsx';
+// import Order from './pages/order/Order.jsx';
 import Cart from './pages/cart/Cart.jsx';
 import Dashboard from './pages/admin/dashboard/Dashboard.jsx';
 import NoPage from './pages/nopage/NoPage.jsx';
@@ -34,6 +34,15 @@ import Signup from './pages/registration/signup/Signup.jsx';
 import ForgotPassword from './pages/registration/forgotPassword/ForgotPassword.jsx';
 import ContactUs from './pages/contact/ContactUs.jsx';
 import contactData from './pages/contact/contactData.jsx';
+import Message from './pages/admin/page/Message.jsx';
+import OrderData from './pages/Order/OrderData.jsx';
+import AllProducts from './pages/allproducts/AllProducts.jsx';
+import TestData from './pages/TEST/TestData.jsx';
+import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
+import ProfileData from './pages/ProfilePage/ProfileData.jsx';
+
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
   return (
@@ -41,8 +50,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/order" element={
-            <ProtectedRoutes><Order /></ProtectedRoutes>} />
+          <Route path="/order" element={<ProtectedRoutes><OrderData/></ProtectedRoutes>} />
           <Route path="/cart" element={<Cart/>} />
           <Route path="/dashboard" element={<ProtectedRoutesForAdmin><Dashboard /></ProtectedRoutesForAdmin> } />
           <Route path="/productinfo/:id" element={<ProductInfo/>} />
@@ -65,6 +73,11 @@ function App() {
           <Route path="/ForgotPassword" element={<ForgotPassword/>} />
           <Route path="/contact" element={<ContactUs/>} />
           <Route path="/contactData" element={<contactData/>} />
+          <Route path="/Notification" element={<Message/>} />
+          <Route path="/AllProducts" element={<AllProducts/>} />
+          <Route path="/TestData" element={<TestData/>} />
+          <Route path="/Profile" element={<ProfilePage/>} />
+          <Route path="/ProfileData" element={<ProfileData/>} />
         </Routes>
         <ToastContainer/>
       </Router>

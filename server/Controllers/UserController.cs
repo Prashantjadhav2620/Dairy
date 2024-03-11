@@ -13,6 +13,8 @@ using DairyApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using Newtonsoft.Json;
+using iText.StyledXmlParser.Jsoup.Select;
+using Microsoft.VisualBasic;
 
 [ApiController]
 [Route("api/user")]
@@ -75,10 +77,19 @@ public class UserController : ControllerBase
         var refreshToken = GenerateRefreshToken(userLogin.EmailId);
         var User_Id = UserId(userLogin.EmailId);
 
+        string userIdAndUsername = UserNameAndId(userLogin.EmailId);
+
+        // Extracting user ID and username
+        string[] idAndUsernameArray = userIdAndUsername.Split(" - ");
+        int Id = int.Parse(idAndUsernameArray[0]);
+        string username = idAndUsernameArray[1];
+
         int expiresIn = 5 * 60; // 5 minutes in seconds
         var authenticatedUser = new UserResponse
         {
             Uid = User_Id,
+            UserId=Id,
+            Username = username,
             Email = userLogin.EmailId,
             EmailVerified = true,
             isAnonymous= false
@@ -272,6 +283,36 @@ public class UserController : ControllerBase
 
         return isValid;
     }
+    private string UserNameAndId(string EmailId)
+    {
+        using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
+        {
+            connection.Open();
+
+            string query = "SELECT Id, Username FROM [User] WHERE EmailId = @EmailId";
+
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@EmailId", EmailId);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int userId = reader.GetInt32(0); 
+                        string username = reader.GetString(1);
+
+                        return $"{userId} - {username}";
+                    }
+                    else
+                    {
+                        return "User not found";
+                    }
+                }
+            }
+        }
+    }
+
 
     private string GetHashedPassword(string EmailId)
     {

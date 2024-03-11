@@ -25,6 +25,8 @@ namespace DairyApp.Models
         public string Email { get; set; }
         public bool EmailVerified { get; set; }
         public bool isAnonymous { get; set; }
+        public int UserId { get; set; }
+        public string Username { get; set; }
         // Add other user-related properties as needed
     }
 
