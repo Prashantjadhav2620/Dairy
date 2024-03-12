@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useState ,useEffect} from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Link,useNavigate } from 'react-router-dom'
 import { BsFillCloudSunFill } from 'react-icons/bs'
@@ -7,6 +7,11 @@ import { FiSun } from 'react-icons/fi'
 import myContext from '../../context/data/myContext'
 import { RxCross2 } from 'react-icons/rx'
 import { useSelector } from 'react-redux'
+import { Badge } from 'react-bootstrap';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+// import { Badge } from '@mui/material'; // Material-UI Badge component for visual appeal
+// import { IoMdNotificationsOutline } from 'react-icons/io'
+import axios from 'axios'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -28,6 +33,36 @@ export default function Navbar() {
   }
 
   const cartItems = useSelector((state) => state.cart)
+
+  const [messages, setMessages] = useState([]);
+        useEffect(() => {
+          const fetchData = async () => {
+            try {
+              const response = await axios.get('https://localhost:2620/api/Notification');
+              if(response.status===200){
+
+                console.log("response", response.data);
+                const activeMessages = response.data.filter(message => message.isActive === true);
+                if (activeMessages.length > 0) {
+                  setGetRows(activeMessages.length);
+                  setMessages(activeMessages, () => {
+                  });
+                }
+                
+              }
+            } catch (error) {
+              console.error("error", error);
+            }
+          };
+        
+          fetchData();
+        }, []);
+
+        console.log("messages",messages)
+
+  const [getRows, setGetRows] = useState([]);
+
+  console.log("getRows",getRows)
 
   return (
     <div className="bg-white sticky top-0 z-50  "  >
@@ -91,6 +126,13 @@ export default function Navbar() {
                     </div>
                   ) : null}
 
+                {user?.data?.User?.Email === "Admin123@gmail.com" ? (
+                    <div className="flow-root">
+                      <Link to={'/Notification'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                        Notification's
+                      </Link>
+                    </div>
+                  ) : null}
                   
                   {user ?<div className="flow-root">
                     <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
@@ -173,6 +215,9 @@ export default function Navbar() {
                   }
                   
 
+                  
+                  
+
                   {user?<a onClick={logout} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Logout
                   </a>:<Link to={'/login'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
@@ -199,6 +244,37 @@ export default function Navbar() {
                       alt="Dan_Abromov" />
                   </a>
                 </div>
+                {/* {
+                  user?.data?.User?.Email === "Admin123@gmail.com" && (
+                    <div className="ml-4 flow-root lg:ml-6 relative">
+                      <Link to={'/Notification'} className="group -m-2 flex items-center p-2" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                      <IoMdNotificationsOutline style={{ width: '24px', height: '24px' }} />
+
+                      </Link>
+                    </div>
+                  )
+                } */}
+                {
+                  user?.data?.User?.Email === "Admin123@gmail.com" && (
+                    <div className="ml-4 flow-root lg:ml-6 ">
+                      <Link to="/Notification" className="group -m-2 flex items-center p-2" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                        <Badge badgeContent={getRows === '0' ? '0' : getRows} color='error'>
+                          <IoMdNotificationsOutline style={{ width: '24px', height: '24px' }} />
+                          
+                        </Badge>
+                      </Link>
+                    </div>
+                  )
+                }
+                  {/* {user?.data?.User?.Email === "Admin123@gmail.com" && (
+                    <Link to="/Notification" className="group -m-2 flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                      <div className="ml-4 flow-root lg:ml-6 relative">
+                      <Badge badgeContent={getRows === '0' ? '0' : getRows} color="error">
+                        <IoMdNotificationsOutline className="text-red-500 hover:text-red-700 dark:text-white dark:hover:text-red-300 w-6 h-6" />
+                      </Badge>
+                      </div>
+                    </Link>
+                  )} */}
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
