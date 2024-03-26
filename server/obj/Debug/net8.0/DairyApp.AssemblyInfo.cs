@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DairyApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+920a362a19f4bdd168a849f2cf3bc8c4fdda969b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bfef1d6d5bad02ff314a228af93dd4ab6d197fea")]
 [assembly: System.Reflection.AssemblyProductAttribute("DairyApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DairyApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

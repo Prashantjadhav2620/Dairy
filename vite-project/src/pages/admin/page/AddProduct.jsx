@@ -20,7 +20,7 @@ function AddProduct() {
     const getProductId = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('https://localhost:2620/api/Products/products');
+            const response = await axios.get('http://localhost:2620/api/Products/products');
             const fetchedProductId = response.data;
             const lastProductId = Math.max(...fetchedProductId.map(product => product.product_Id));
             setProducts({ ...products, product_Id: lastProductId+1 });

@@ -55,7 +55,7 @@ const FormDataSender = () => {
       });
 
       const response = await axios.post(
-        "https://localhost:2620/api/AgentData/createDeliveryAgent",
+        "http://localhost:2620/api/AgentData/createDeliveryAgent",
         formDataToSend
       );
 

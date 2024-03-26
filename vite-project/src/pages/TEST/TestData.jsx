@@ -52,7 +52,7 @@ export default function TestData() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://localhost:2620/api/OrderInfo/getallorders');
+        const response = await axios.get('http://localhost:2620/api/OrderInfo/getallorders');
         const apiData = response.data;
 
         console.log("apiData", apiData)

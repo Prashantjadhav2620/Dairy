@@ -12,7 +12,7 @@ export default function CheckData() {
   const getAgentData = async () => {
     try {
       const response = await axios.get(
-        "https://localhost:2620/api/AgentData/getAllDeliveryAgents"
+        "http://localhost:2620/api/AgentData/getAllDeliveryAgents"
       );
 
       if (response.status === 200) {
@@ -29,7 +29,7 @@ export default function CheckData() {
     try {
       const response = await axios({
         method: "GET",
-        url: `https://localhost:2620/api/PhotoTest/DownloadImage/${FileName}`,
+        url: `http://localhost:2620/api/PhotoTest/DownloadImage/${FileName}`,
         responseType: "blob",
       });
       const objectURL = URL.createObjectURL(response.data);

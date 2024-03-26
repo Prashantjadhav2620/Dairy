@@ -43,7 +43,7 @@ function Signup() {
         try {
             setLoading(true);
 
-            const response = await fetch("https://localhost:2620/api/user/register", {
+            const response = await fetch("http://localhost:2620/api/user/register", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

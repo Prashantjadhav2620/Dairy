@@ -35,7 +35,7 @@ const DeliveryAgentManagement = () => {
       }
 
       const response = await axios.post(
-        "https://localhost:2620/api/DeliveryAgent/createdeliveryagent",
+        "http://localhost:2620/api/DeliveryAgent/createdeliveryagent",
         formData
       );
       if (response.status === 200) {
@@ -67,7 +67,7 @@ const DeliveryAgentManagement = () => {
   const getAllDeliveryAgents = async () => {
     try {
       const response = await axios.get(
-        "https://localhost:2620/api/DeliveryAgent"
+        "http://localhost:2620/api/DeliveryAgent"
       );
 
       const agentsList = response.data;

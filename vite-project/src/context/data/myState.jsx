@@ -47,9 +47,10 @@ function MyState(props) {
     }
 
     try {
-      // const response = await axios.post('https://localhost:2620/api/Products/createproducts', products);
+      // const response = await axios.post('http://localhost:2620/api/Products/createproducts', products);
       const response = await axios.post(
-        "https://localhost:2620/api/Products/createproducts",
+        // "http://localhost:2620/api/Products/createproducts",
+        "http://localhost:2620/api/Products/createproducts",
         products
       );
       if (response.status === 200) {
@@ -80,9 +81,10 @@ function MyState(props) {
   const getProductData = async () => {
     setLoading(true);
     try {
-      // const response = await axios.get('https://localhost:2620/api/Products/products');
+      // const response = await axios.get('http://localhost:2620/api/Products/products');
       const response = await axios.get(
-        "https://localhost:2620/api/Products/products"
+        "http://localhost:2620/api/Products/products"
+        // "http://localhost:2620/api/Products/products"
       );
       setProduct(response.data);
       toast.success("Products fetched successfully");
@@ -114,7 +116,8 @@ function MyState(props) {
         return toast.error("Product ID is required for update");
       }
 
-      const updateEndpoint = `https://localhost:2620/api/Products/updateproduct/${products.product_Id}`;
+      // const updateEndpoint = `http://localhost:2620/api/Products/updateproduct/${products.product_Id}`;
+      const updateEndpoint = `http://localhost:2620/api/Products/updateproduct/${products.product_Id}`;
       const response = await axios.put(updateEndpoint, products);
 
       if (response.status === 200) {
@@ -149,7 +152,7 @@ function MyState(props) {
       setLoading(true);
 
       try {
-        const deleteEndpoint = `https://localhost:2620/api/Products/deleteproduct/${item.product_Id}`;
+        const deleteEndpoint = `http://localhost:2620/api/Products/deleteproduct/${item.product_Id}`;
         const response = await axios.delete(deleteEndpoint);
 
         if (response.status === 200) {
@@ -248,7 +251,7 @@ function MyState(props) {
 
       // Make API request
       const response = await axios.post(
-        "https://localhost:2620/api/AgentData/createDeliveryAgent",
+        "http://localhost:2620/api/AgentData/createDeliveryAgent",
         formData,
         {
           headers: {
@@ -306,7 +309,7 @@ function MyState(props) {
       ) {
         return console.error("Missing required fields");
       }
-      const updateEndpoint = `https://localhost:2620/api/AgentData/updateDeliveryAgent/${id}`;
+      const updateEndpoint = `http://localhost:2620/api/AgentData/updateDeliveryAgent/${id}`;
 
       // Assuming the backend API expects a payload like { DeliveryAgent: { ID, NAME, ADDRESS, MobileNo, EmailId, PASSWORD, JoiningDate } }
       const response = await axios.put(updateEndpoint, {
@@ -349,9 +352,9 @@ function MyState(props) {
 
   const getAgentData = async () => {
     try {
-      // const response = await axios.get('https://localhost:2620/api/DeliveryAgent/alldeliveryagents');
+      // const response = await axios.get('http://localhost:2620/api/DeliveryAgent/alldeliveryagents');
       const response = await axios.get(
-        "https://localhost:2620/api/AgentData/getAllDeliveryAgents"
+        "http://localhost:2620/api/AgentData/getAllDeliveryAgents"
       );
       setAgent(response.data);
       toast.success("Agent Data fetched successfully");
@@ -379,7 +382,7 @@ function MyState(props) {
       setLoading(true);
 
       try {
-        const deleteEndpoint = `https://localhost:2620/api/AgentData/deleteDeliveryAgent/${item.deliveryAgent.id}`;
+        const deleteEndpoint = `http://localhost:2620/api/AgentData/deleteDeliveryAgent/${item.deliveryAgent.id}`;
         const response = await axios.delete(deleteEndpoint);
 
         if (response.status === 200) {
@@ -447,7 +450,7 @@ function MyState(props) {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://localhost:2620/api/OrderInfo/createorder",
+        "http://localhost:2620/api/OrderInfo/createorder",
         OrderInfo
       );
       if (response.status === 200) {
@@ -476,9 +479,9 @@ function MyState(props) {
   const [orderIds, setorderIds] = useState();
 
   const getorderIds = async () => {
-    // const response = await axios.get('https://localhost:2620/api/OrderInfo/getOrderIds')
+    // const response = await axios.get('http://localhost:2620/api/OrderInfo/getOrderIds')
     const response = await axios.get(
-      "https://localhost:2620/api/OrderInfo/getOrderIds"
+      "http://localhost:2620/api/OrderInfo/getOrderIds"
     );
     if (response) {
       const index = response.data.length - 1;
@@ -496,10 +499,10 @@ function MyState(props) {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://localhost:2620/api/OrderInfo/getallorders`
+        `http://localhost:2620/api/OrderInfo/getallorders`
       );
       // const response = await axios.get(
-      //   `https://localhost:2620/api/OrderInfo/getallorders`
+      //   `http://localhost:2620/api/OrderInfo/getallorders`
       // );
       if (response.status === 200) {
         setOrder(response.data);
@@ -529,7 +532,7 @@ function MyState(props) {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://localhost:2620/api/user/getallusers",
+          "http://localhost:2620/api/user/getallusers",
           {
             method: "GET",
             headers: {

@@ -21,7 +21,7 @@ function AddDeliveryAgent() {
   const getAgentId = async () => {
     loading(true);
     try {
-      const response = await axios.get('https://localhost:2620/api/AgentData/getAllDeliveryAgents');
+      const response = await axios.get('http://localhost:2620/api/AgentData/getAllDeliveryAgents');
       const fetchedAgentId = response.data;
       const lastAgentId = Math.max(0, ...fetchedAgentId.map((agent) => agent.deliveryAgent.id), 0);
       setAgents({ ...Agents, deliveryAgent: { ...Agents.deliveryAgent, id: lastAgentId + 1 } });

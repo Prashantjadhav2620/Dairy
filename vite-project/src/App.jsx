@@ -25,7 +25,7 @@ import Report from './components/report/Report.jsx';
 import ImageComponent from './pages/fetchImg/ImageComponent.jsx';
 import CheckData from './pages/checkData/checkData.jsx';
 import BOBURL from './pages/BOBURL/BOBURL.jsx';
-import PdfViewer from  './pages/viewPdf/PdfViewer.jsx';
+// import PdfViewer from  './pages/viewPdf/PdfViewer.jsx';
 import FormDataSender from './pages/admin/page/FormDataSender.jsx';
 import UpdateDeliveryAgent from './pages/admin/page/UpdateDeliveryAgent.jsx';
 import OrderDetails from './pages/showOrderDetails/showOrderDetails.jsx';
@@ -64,7 +64,7 @@ function App() {
           <Route path="/ImageComponent" element={<ImageComponent/>} />
           <Route path="/checkData" element={<CheckData/>} />
           <Route path="/BOBURL" element={<BOBURL/>} />
-          <Route path="/PdfViewer" element={<PdfViewer/>} />
+          {/* <Route path="/PdfViewer" element={<PdfViewer/>} /> */}
           <Route path="/FormDataSender" element={<FormDataSender/>} />
           <Route path="/UpdateDeliveryAgent" element={<UpdateDeliveryAgent/>} />
           <Route path="/OrderDetails" element={<OrderDetails/>} />

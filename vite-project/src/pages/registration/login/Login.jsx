@@ -20,7 +20,7 @@ function Login() {
       setLoading(true);
 
       const response = await axios.post(
-        "https://localhost:2620/api/user/login",
+        "http://localhost:2620/api/user/login",
         {
           emailId: emailId,
           password: password,
@@ -58,7 +58,7 @@ function Login() {
             name="setEmailId"
             value={emailId}
             onChange={(e) => setEmailId(e.target.value)}
-            className="bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none"
+            className="bg-gray-600 mb-4 px-2 py-2 w-full  rounded-lg text-white placeholder:text-gray-200 outline-none"
             placeholder="Email Id"
           />
         </div>
@@ -67,7 +67,7 @@ function Login() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none"
+            className="bg-gray-600 mb-4 px-2 py-2 w-full  rounded-lg text-white placeholder:text-gray-200 outline-none"
             placeholder="Password"
           />
         </div>

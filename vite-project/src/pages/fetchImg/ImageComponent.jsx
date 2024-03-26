@@ -21,7 +21,7 @@ const ImageComponent = () => {
     try {
       const response = await axios({
         method: "GET",
-        url: `https://localhost:2620/api/PhotoTest/DownloadImage/${FileName}`,
+        url: `http://localhost:2620/api/PhotoTest/DownloadImage/${FileName}`,
         responseType: "blob",
       });
       const objectURL = URL.createObjectURL(response.data);
@@ -56,7 +56,7 @@ const ImageComponent = () => {
       data.append("filename", imgeName);
 
       const response = await axios.post(
-        "https://localhost:2620/api/PhotoTest/ImageUpload",
+        "http://localhost:2620/api/PhotoTest/ImageUpload",
         data
       );
 

@@ -14,7 +14,7 @@ const Message = () => {
         useEffect(() => {
           const fetchData = async () => {
             try {
-              const response = await axios.get('https://localhost:2620/api/Notification');
+              const response = await axios.get('http://localhost:2620/api/Notification');
               if(response.status===200){
 
                 console.log("response", response.data);

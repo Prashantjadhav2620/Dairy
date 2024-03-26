@@ -45,32 +45,23 @@ namespace DairyApp.Controllers
         {
             try
             {
-                int id = GetIdFromNotification();
+                // int id = GetIdFromNotification();
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
                 {
                     connection.Open();
 
                     // Create and configure the SqlCommand for the stored procedure
-                    using (SqlCommand cmd = new SqlCommand("InsertNotification", connection))
+                    using (SqlCommand cmd = new SqlCommand("NotificationMethods", connection))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        // Assuming @ID is an int in the database
-                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = id;
-
-                        // Assuming @SenderName is a string in the database
-                        cmd.Parameters.Add("@SenderName", SqlDbType.NVarChar).Value = notification.SenderName;
-
-                        // Assuming @Email, @Mobile, @Subject, @Text are strings in the database
-                        cmd.Parameters.Add("@Email", SqlDbType.NVarChar).Value = notification.Email;
-                        cmd.Parameters.Add("@Mobile", SqlDbType.NVarChar).Value = notification.Mobile;
-                        cmd.Parameters.Add("@Subject", SqlDbType.NVarChar).Value = notification.Subject;
-                        cmd.Parameters.Add("@Text", SqlDbType.NVarChar).Value = notification.Text;
-
-                        // Assuming @IsActive is a bit in the database
-                        cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = true;
-                        cmd.Parameters.Add("@DisplayColumn",SqlDbType.Int).Value = 1;
-
+                        cmd.Parameters.AddWithValue("@type", 1);
+                        cmd.Parameters.AddWithValue("@SenderName", notification.SenderName);
+                        cmd.Parameters.AddWithValue("@Email", notification.Email);
+                        cmd.Parameters.AddWithValue("@Mobile", notification.Mobile);
+                        cmd.Parameters.AddWithValue("@Subject", notification.Subject);
+                        cmd.Parameters.AddWithValue("@Message", notification.Message); 
+                        cmd.Parameters.AddWithValue("@IsActive", true);
                         cmd.ExecuteNonQuery();
                     }
 
@@ -78,7 +69,6 @@ namespace DairyApp.Controllers
             }
             catch (SqlException ex)
             {
-                // Handle potential database errors gracefully
                 return StatusCode(500, "Error creating notification: " + ex.Message);
             }
 
@@ -93,8 +83,6 @@ namespace DairyApp.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
                 {
                     connection.Open();
-
-                    // Create and configure the SqlCommand for the stored procedure
                     using (SqlCommand cmd = new SqlCommand("GetAllNotifications", connection))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -107,12 +95,12 @@ namespace DairyApp.Controllers
                             {
                                 NotificationModel notification = new NotificationModel
                                 {
-                                    Id = Convert.ToInt32(reader["Id"]),
+                                    ID = Convert.ToInt32(reader["ID"]),
                                     SenderName = reader["SenderName"].ToString(),
                                     Email = reader["Email"].ToString(),
                                     Mobile = reader["Mobile"].ToString(),
                                     Subject = reader["Subject"].ToString(),
-                                    Text = reader["Text"].ToString(),
+                                    Message = reader["Message"].ToString(),
                                     IsActive = Convert.ToBoolean(reader["IsActive"])
                                 };
 
@@ -126,7 +114,6 @@ namespace DairyApp.Controllers
             }
             catch (SqlException ex)
             {
-                // Handle potential database errors gracefully
                 return StatusCode(500, "Error retrieving notifications: " + ex.Message);
             }
         }
@@ -141,14 +128,12 @@ namespace DairyApp.Controllers
                 {
                     connection.Open();
 
-                    // Create and configure the SqlCommand for the stored procedure
                     using (SqlCommand cmd = new SqlCommand("UpdateNotificationIsActive", connection))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = id;
                         cmd.Parameters.Add("@IsActive", SqlDbType.Bit).Value = false;
 
-                        // Execute the SqlCommand
                         cmd.ExecuteNonQuery();
                     }
                 }

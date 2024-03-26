@@ -17,7 +17,7 @@
 //   return (
 //     <div className="container">
 //      <div>
-//      <img src={'https://m.media-amazon.com/images/G/31/cart/empty/kettle-desaturated._CB424694257_.svg'} alt="" />
+//      <img src={'http://m.media-amazon.com/images/G/31/cart/empty/kettle-desaturated._CB424694257_.svg'} alt="" />
 //      </div>
 //       <div className="text">Your Cart is empty</div>
 //       <button className="button" onClick={signup}>
@@ -53,7 +53,7 @@ const CartEmpty = () => {
         <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3 mx-auto max-w-xs">
             <div className="text-center mb-6">
                 <img
-                    src="https://m.media-amazon.com/images/G/31/cart/empty/kettle-desaturated._CB424694257_.svg"
+                    src="http://m.media-amazon.com/images/G/31/cart/empty/kettle-desaturated._CB424694257_.svg"
                     alt=""
                     className="max-w-full"
                 />

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DairyApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+817ef88239e142478a4b336cfc51559cb9d27db4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bfef1d6d5bad02ff314a228af93dd4ab6d197fea")]
 [assembly: System.Reflection.AssemblyProductAttribute("DairyApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DairyApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
