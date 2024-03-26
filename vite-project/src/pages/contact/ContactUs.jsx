@@ -106,6 +106,7 @@ class ContactForm extends React.Component {
         
         // Update formValid state to trigger success message
         this.setState({ formValid: true });
+        window.reload();
       } catch (error) {
         console.error('Error submitting form:', error);
         // Handle error if necessary

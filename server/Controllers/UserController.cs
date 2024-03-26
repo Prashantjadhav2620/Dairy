@@ -522,7 +522,51 @@ public class UserController : ControllerBase
         }
     }
 
+    //[Authorize]
+[HttpGet("getallByEmail/{Email}")]
+public IActionResult getallByEmail(string Email)
+{
+    List<GetUserModel> users = new List<GetUserModel>();
 
+    using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Dairy")))
+    {
+        connection.Open();
+        // Adjusted SQL query to use parameterized query
+        string query = "SELECT * FROM [User] WHERE EmailId = @Email";
+        using (SqlCommand cmd = new SqlCommand(query, connection))
+        {
+            // Add parameter for EmailId
+            cmd.Parameters.AddWithValue("@Email", Email);
+            
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    // Map the data to GetUserModel objects
+                    GetUserModel user = new GetUserModel
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Username = reader["Username"].ToString(),
+                        EmailId = reader["EmailId"].ToString(),
+                        MobileNumber = reader["MobileNumber"].ToString(),
+                        Date = Convert.ToDateTime(reader["Date"]),
+                    };
+
+                    users.Add(user);
+                }
+            }
+        }
+    }
+
+    if (users.Count > 0)
+    {
+        return Ok(users);
+    }
+    else
+    {
+        return NotFound("No users found");
+    }
+}
 
 
 }
